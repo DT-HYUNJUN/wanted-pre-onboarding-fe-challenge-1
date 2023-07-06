@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# 원티드 프리온보딩 프론트엔드 챌린지 1
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## React와 History API 사용하여 SPA Router 기능 구현하기
 
-## Available Scripts
+이번에 프리온보딩을 시작하면서 React도 처음 시작하다 보니 어려움이 많이 있다.
 
-In the project directory, you can run:
+아직 챌린지를 완벽하게 구현할 능력이 되진 않지만 그래도 어느정도 흉내내려고 노력했다.
 
-### `npm start`
+## 화면 구성
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![root](./readme_img/root.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 코드
 
-### `npm test`
+```jsx
+class App extends Component {
+  state = {
+    // 현재 페이지를 상태 값으로 관리
+    pageName : '',
+  }
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  onChagePage = pageName => {
+    // 버튼이 클릭되면 pageName 이라는 상태값을 바꿔주기 위한 메서드
+    this.setState({pageName})
+  }
 
-### `npm run build`
+  // 랭킹 페이지 버튼 클릭
+  onRootClick = () => {
+    const pageName = 'Root'
+    window.history.pushState(pageName, '', '/')
+    this.onChagePage(pageName)
+  }
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  // 유저 페이지 버튼 클릭
+  onAboutClick = () => {
+    const pageName = 'About'
+    window.history.pushState(pageName, '', '/about')
+    this.onChagePage(pageName)
+  }
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  render() {
+    const { pageName } = this.state
+    return (
+      <div>
+        <button className='link' onClick={this.onRootClick}>Root</button>
+        <button className='link' onClick={this.onAboutClick}>About</button>
+        {!pageName && <Root />}
+        {pageName === 'Root' && <Root />}
+        {pageName === 'About' && <About />}
+      </div>
+    )
+  }
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```jsx
+function Root() {
+  return (
+    <div className='title'>
+      <h1>root</h1>
+    </div>
+  )
+}
+```
 
-### `npm run eject`
+```jsx
+function About() {
+  return (
+    <div className='title'>
+      <h1>about</h1>
+    </div>
+  )
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 후기
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+아직 부족한 점이 많기에 요구 사항을 완벽히 구현해내지 못했지만 챌린지를 하면서 router 기능을 어느정도 이해할 수 있는 시간이었다.
